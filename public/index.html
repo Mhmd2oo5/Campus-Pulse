@@ -3,35 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Campus Pulse - Log In</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="Find a study space, computer lab, printer, or cafeteria with Campus Pulse. Explore resources and save your campus favorites.">
+  <meta name="theme-color" content="#174f3b">
+  <title>Campus Pulse · Find your place</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/directory.css">
+  <script type="module" src="js/directory.mjs"></script>
 </head>
 <body>
-  <main class="auth-container">
-    <h1>Campus Pulse</h1>
-    <h2>Log In</h2>
-
-    <form id="login-form" novalidate>
-      <div class="form-group">
-        <label for="login-username">Username</label>
-        <input type="text" id="login-username" name="username" required autocomplete="username">
+  <a class="skip-link" href="#directory">Skip to resources</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html" aria-label="Campus Pulse home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M4 17h6l4-10 5 18 4-11 2 3h3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Campus<span>Pulse</span></a>
+      <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <nav class="site-navigation" id="site-navigation" aria-label="Main navigation">
+        <a href="#directory" id="explore-nav" aria-current="page">Explore campus</a>
+        <a href="#recommendations" id="for-you-nav">For you</a>
+        <a href="#directory" id="saved-nav">Saved <span class="count-badge" id="saved-count">0</span></a>
+        <div class="account"><span id="account-user" hidden></span><a href="login.html" class="sign-in" id="account-link">Sign in</a><button type="button" class="sign-in" id="logout-btn" hidden>Log out</button></div>
+      </nav>
+    </div>
+  </header>
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-pulse" aria-hidden="true">✳</span> A LITTLE LESS SEARCHING. A LOT MORE CAMPUS.</p>
+        <h1 id="hero-title">Find your space.<br><span>Make campus yours.</span></h1>
+        <p class="hero-description">A quiet corner. A computer for your next big idea.<br class="desktop-break"> A coffee between classes. It all starts here.</p>
+        <form id="search-form" class="search-form" role="search">
+          <label class="sr-only" for="resource-search">Search campus resources</label>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+          <input type="search" id="resource-search" name="q" placeholder="Try “library” or “coffee”…" maxlength="200" autocomplete="off" aria-controls="resource-grid">
+          <button type="submit" class="primary-button">Find a place</button>
+        </form>
+        <p class="hero-footnote">Built around your day. Inspired by your campus.</p>
       </div>
-
-      <div class="form-group">
-        <label for="login-password">Password</label>
-        <input type="password" id="login-password" name="password" required autocomplete="current-password">
-      </div>
-
-      <p id="login-error" class="error-msg" aria-live="polite"></p>
-
-      <button type="submit" class="btn">Log In</button>
-    </form>
-
-    <p class="switch-link">
-      Don't have an account? <a href="signup.html">Sign up</a>
-    </p>
+      <div class="hero-visual"><img src="assets/campus.svg" alt="Illustrated campus with a library, computing building, café, and green spaces" width="560" height="430" fetchpriority="high"><span class="visual-caption">YOUR NEXT FAVORITE SPOT IS OUT THERE</span></div>
+    </section>
+    <section class="categories-section" aria-labelledby="categories-title">
+      <div class="section-kicker"><h2 id="categories-title">What brings you here?</h2><span>A spot for every part of your day</span></div>
+      <div class="category-grid" id="category-grid"></div>
+    </section>
+    <section id="directory" class="directory-section" aria-labelledby="directory-title">
+      <div class="section-heading"><div><p class="eyebrow">EXPLORE YOUR CAMPUS</p><h2 id="directory-title" tabindex="-1">A place for every plan.</h2><p>Discover spaces that help you do your thing.</p></div><a class="underlined-link" href="#recommendations">Help me choose</a></div>
+      <div class="preview-notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>A first look at Campus Pulse.</strong> These are sample resources and locations. Live conditions, opening hours, and reports aren’t connected yet.</p></div>
+      <div class="directory-toolbar"><div class="filter-group" id="category-filters" role="group" aria-label="Filter by resource category"></div><button type="button" class="text-button clear-filters" id="clear-filters" hidden>Clear filters</button></div>
+      <div class="results-toolbar"><p id="result-count" role="status" aria-live="polite"></p><div class="sort-label"><label for="sort-resources">Sort by</label><select id="sort-resources"><option value="featured">Featured</option><option value="name">Name: A–Z</option><option value="category">Category</option></select></div></div>
+      <div id="resource-grid" class="resource-grid"><p role="status">Loading the resource preview…</p></div>
+      <div id="empty-state" class="empty-state" hidden><span class="empty-symbol" aria-hidden="true">⌕</span><h3 id="empty-title">No places found.</h3><p id="empty-description"></p><button type="button" class="primary-button" id="empty-reset">Explore all resources</button></div>
+      <noscript><p class="preview-notice">Please enable JavaScript to search and explore the resource directory. You can still <a href="login.html">sign in</a>.</p></noscript>
+    </section>
+    <section class="recommendations-section" id="recommendations" aria-labelledby="recommendations-title">
+      <div class="recommendation-intro"><p class="eyebrow">A LITTLE DIRECTION</p><h2 id="recommendations-title">Your next move,<br>made easier.</h2><p>Tell us what you’re looking for.<br>We’ll help you explore the possibilities.</p><div class="recommendation-controls">
+        <label for="recommendation-category">What do you need?</label><select id="recommendation-category"><option value="study">Study area</option><option value="labs">Computer lab</option><option value="printers">Printer</option><option value="food">Cafeteria</option></select>
+        <label for="recommendation-location">Preferred building</label><select id="recommendation-location"><option value="all">Any building</option></select>
+        <label for="recommendation-preference">Your preference</label><select id="recommendation-preference"></select>
+      </div><p class="recommendation-note">Preview matches use category and location only. Conditions are unknown, so preferences cannot be scored until recent reports are available.</p></div>
+      <div class="recommendation-results"><p class="recommendation-status" id="recommendation-status" role="status" aria-live="polite"></p><div class="recommendation-grid" id="recommendation-grid"></div><p class="recommendation-explanation">Why these places? They match your selected category and building. This is an unranked preview, not a live recommendation score.</p></div>
+    </section>
+    <section class="closing-note" aria-label="About Campus Pulse"><span class="closing-icon" aria-hidden="true">✳</span><div><h2>Good days start with the right place.</h2><p>Campus Pulse brings the spaces around you a little closer.</p></div><a href="#directory" class="secondary-button">Explore campus</a></section>
   </main>
-
-  <script src="js/auth.js"></script>
+  <footer class="site-footer"><a class="brand footer-brand" href="index.html">Campus<span>Pulse</span></a><p>For the spaces between classes.</p><span>Campus resource directory · Frontend preview</span></footer>
+  <dialog id="resource-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+    <div class="dialog-image"><img id="dialog-art" src="assets/library.svg" alt="" width="600" height="320"><button type="button" class="dialog-close" id="dialog-close" aria-label="Close resource details">×</button><span class="sample-badge">Sample resource</span></div>
+    <div class="dialog-body"><p class="eyebrow" id="dialog-category"></p><h2 id="dialog-title"></h2><p class="dialog-location" id="dialog-location"></p><p id="dialog-description"></p><h3>What you’ll find</h3><ul class="dialog-features" id="dialog-features"></ul><dl class="detail-facts"><div><dt>Current condition</dt><dd>Unknown · no live reports</dd></div><div><dt>Opening hours</dt><dd>Not provided</dd></div><div><dt>Capacity</dt><dd id="dialog-capacity"></dd></div><div><dt>Directory status</dt><dd id="dialog-active"></dd></div></dl><div class="report-placeholder"><h3>Latest reports</h3><p>No live reports are connected in this preview. Resource conditions have not been verified.</p></div><button type="button" class="primary-button" id="dialog-save" aria-pressed="false">Save this resource</button><p class="dialog-note">Example information only. Confirm campus details before visiting.</p></div>
+  </dialog>
+  <p id="announcements" class="sr-only" role="status" aria-live="polite"></p>
 </body>
 </html>

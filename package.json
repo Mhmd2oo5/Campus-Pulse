@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:frontend": "node --test frontend/tests/*.test.cjs",
+    "start:frontend": "node frontend/serve.cjs"
   },
   "repository": {
     "type": "git",
