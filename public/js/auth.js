@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   const signupForm = document.getElementById('signup-form');
   const loginForm = document.getElementById('login-form');
-  const displayUsername = document.getElementById('display-username');
-  const displayPassword = document.getElementById('display-password');
-  const logoutBtn = document.getElementById('logout-btn');
 
   // 1. Handle Signup Submission
   if (signupForm) {
@@ -31,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       users[username] = password;
       localStorage.setItem('cp_users', JSON.stringify(users));
-      sessionStorage.setItem('cp_current_user', JSON.stringify({ username, password }));
+      sessionStorage.setItem('cp_current_user', JSON.stringify({ username }));
 
       window.location.href = 'main.html';
     });
@@ -57,27 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      sessionStorage.setItem('cp_current_user', JSON.stringify({ username, password }));
+      sessionStorage.setItem('cp_current_user', JSON.stringify({ username }));
       window.location.href = 'main.html';
     });
   }
 
-  // 3. Populate Main Page Safely
-  if (displayUsername && displayPassword) {
-    const currentUser = JSON.parse(sessionStorage.getItem('cp_current_user') || 'null');
-
-    if (!currentUser) {
-      window.location.href = 'index.html';
-      return;
-    }
-
-    // Safe rendering via .textContent
-    displayUsername.textContent = currentUser.username;
-    displayPassword.textContent = currentUser.password;
-
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('cp_current_user');
-      window.location.href = 'index.html';
-    });
-  }
 });
